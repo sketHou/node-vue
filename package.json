@@ -1,0 +1,24 @@
+{
+  "name": "node-vue",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sketHou/node-vue.git"
+  },
+  "author": "sket",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sketHou/node-vue/issues"
+  },
+  "homepage": "https://github.com/sketHou/node-vue#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "vue": "^2.1.10",
+    "vue-server-renderer": "^2.1.10"
+  }
+}
