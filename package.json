@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sketHou/node-vue#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "vue": "^2.1.10",
     "vue-server-renderer": "^2.1.10"
