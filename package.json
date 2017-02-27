@@ -20,6 +20,8 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.14.1",
     "vue": "^2.1.10",
-    "vue-server-renderer": "^2.1.10"
+    "vue-server-renderer": "^2.1.10",
+    "vue-ssr-webpack-plugin": "^1.0.2",
+    "webpack": "^2.2.1"
   }
 }
