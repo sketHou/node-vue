@@ -4,7 +4,7 @@ const express = require('express');
 const serialize = require('serialize-javascript') //Object 转 Array
 const resolve = fileName => path.resolve(__dirname, fileName);
 const vueServerRender = require('vue-server-renderer');
-
+const compression = require('compression');
 const app = express();
 const router = express.Router();
 const isProd = process.env.NODE_ENV === 'production';
@@ -22,14 +22,20 @@ if (isProd) {
 } else {
   // in development: setup the dev server with watch and hot-reload,
   // and update renderer / index HTML on file change.
+  console.log('c1');
   require('./build/setup-dev-server')(app, {
     bundleUpdated: bundle => {
-      renderer = createRenderer(bundle)
+      
+      renderer = createRenderer(bundle);
+      
     },
     indexUpdated: index => {
-      indexHTML = parseIndex(index)
+      console.log('c3');
+      indexHTML = parseIndex(index);
+      console.log('c4');
     }
   })
+  console.log('c2');
 }
 
 function createRenderer (bundle) {
@@ -41,22 +47,6 @@ function createRenderer (bundle) {
     })
 }
 
-
-/**
- * 配置静态资源
- */
-app.use('/page', express.static(
-  path.resolve(__dirname, 'page')
-));
-
-app.use('/assets', express.static(
-  path.resolve(__dirname, 'assets')
-));
-
-
-/**
- * 配置路由
- */
 
 
 function parseIndex (template) {
@@ -73,19 +63,18 @@ const serve = (path, cache) => express.static(resolve(path), {
 })
 
 app.use(compression({ threshold: 0 }))
-app.use(favicon('./public/logo-48.png'))
+// app.use(favicon('./public/logo-48.png'))
 app.use('/service-worker.js', serve('./dist/service-worker.js'))
-app.use('/manifest.json', serve('./manifest.json'))
+// app.use('/manifest.json', serve('./manifest.json'))
 app.use('/dist', serve('./dist'))
-app.use('/public', serve('./public'))
+// app.use('/public', serve('./public'))
 
 app.get('*', (req, res) => {
   if (!renderer) {
     return res.end('waiting for compilation... refresh in a moment.')
   }
-
   res.setHeader("Content-Type", "text/html")
-  res.setHeader("Server", serverInfo)
+  // res.setHeader("Server", serverInfo)
 
   var s = Date.now()
   const context = { url: req.url }

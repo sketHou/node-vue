@@ -1,9 +1,11 @@
+const path = require('path');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpack = require('webpack');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
 const MFS = require('memory-fs');
+
 
 module.exports = function setupDevServer (app, opts) {
 
@@ -15,19 +17,20 @@ module.exports = function setupDevServer (app, opts) {
     );
 
     var clientCompiler = webpack(clientConfig);
-    var devMiddleWare = webpackMiddleware(clienCompiler, {
+    var devMiddleWare = webpackMiddleware(clientCompiler, {
         publicPath: clientConfig.output.publicPath,
         stats: {
             colors: true,
             chunks: false
         }
     });
+
     app.use(devMiddleWare);
     clientCompiler.plugin('done', () => {
-        const fs = devMiddleware.fileSystem
+        const fs = devMiddleWare.fileSystem
         const filePath = path.join(clientConfig.output.path, 'index.html')
         if (fs.existsSync(filePath)) {
-        const index = fs.readFileSync(filePath, 'utf-8')
+        const index = fs.readFileSync(filePath, 'utf-8');
         opts.indexUpdated(index)
         }
     });

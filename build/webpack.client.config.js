@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const base = require('./webpack.base.config')
-const ExtractTextPlugin = require(extract-text-webpack-plugin);//把js中的css文件单独提出整合成一个样式文件
+const ExtractTextPlugin = require('extract-text-webpack-plugin');//把js中的css文件单独提出整合成一个样式文件
 const HTMLPlugin = require('html-webpack-plugin'); //使用 script 来包含所有你的 webpack bundles
 const vueConfig = require('./vue-loader.config');
 const SWPrecachePlugin = require('sw-precache-webpack-plugin'); //https://www.npmjs.com/package/sw-precache-webpack-plugin
@@ -26,7 +26,7 @@ const config = Object.assign({}, base, {
 });
 
 if(process.env.NODE_ENV === 'production') {
-    vueConfig.loaders ={
+    vueConfig.loaders = {
         scss: ExtractTextPlugin.extract({
             use: ['css-loader', 'sass-loader'],
             fallback: 'vue-style-loader'
@@ -50,6 +50,8 @@ if(process.env.NODE_ENV === 'production') {
             staticFileGlobsIgnorePatterns: [/index\.html$/, /\.map$/]
         })
     );
+
+}else{
 
 }
 
